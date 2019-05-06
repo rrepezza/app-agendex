@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<h:form id="cad_paciente">
+		<p:growl sticky="false" showDetail="true" life="5000" />
+		<p:panel header="Cadastro de Pacientes">
+			<h:panelGrid columns="2">
+			
+				<p:outputLabel>CPF</p:outputLabel>
+				<p:inputText value="#{PacienteBean.paciente.cpf}" id="cpf" />
+
+				<p:outputLabel>Nome Completo</p:outputLabel>
+				<p:inputText value="#{PacienteBean.paciente.nomeCompleto}" id="nomeCompleto" />
+				
+				<p:outputLabel>Nome Social</p:outputLabel>
+				<p:inputText value="#{PacienteBean.paciente.nomeSocial}" id="nomeSocial" />
+
+				<p:outputLabel>E-mail</p:outputLabel>
+				<p:inputText value="#{PacienteBean.paciente.email}" id="email" />
+
+				<p:outputLabel>Data Nascimento</p:outputLabel>
+				<p:calendar value="#{PacienteBean.paciente.dataNascimento}" id="dataNascimento" />
+
+				<p:outputLabel>RG</p:outputLabel>
+				<p:inputText value="#{PacienteBean.paciente.rg}" id="rg" />
+				
+				<p:outputLabel>Orgão Expedidor</p:outputLabel>
+				<p:inputText value="#{PacienteBean.paciente.orgaoExpedidor}" id="orgaoExpedidor" />
+
+				<p:commandButton action="#{PacienteBean.cadastrar}" value="Cadastrar"
+					update="cad_paciente" rendered="#{!PacienteBean.ativaUpdate}" />
+			</h:panelGrid>
+			<h:panelGrid columns="3">
+
+				<p:commandButton action="#{PacienteBean.update}" value="Update"
+					update="cad_paciente" rendered="#{PacienteBean.ativaUpdate}" />
+
+				<p:commandButton action="#{PacienteBean.cancelarUpdate}" value="Cancelar"
+					update="cad_paciente" rendered="#{PacienteBean.ativaUpdate}" />
+
+				<p:commandButton action="#{PacienteBean.delete}" value="Delete"
+					update="cad_paciente" rendered="#{PacienteBean.ativaUpdate}" />
+
+			</h:panelGrid>
+		</p:panel>
+
+		<p:dataTable var="paciente" value="#{PacienteBean.pacientes}"
+			selectionMode="single" selection="#{PacienteBean.update}"
+			rowKey="#{paciente.id}">
+
+			<p:ajax event="rowSelect" listener="#{PacienteBean.selecaoUpdate}"
+				update="cad_paciente" />
+
+
+			<p:column headerText="Nome Completo">
+				#{paciente.nomeCompleto}
+			</p:column>
+			<p:column headerText="CPF">
+				#{paciente.cpf}
+			</p:column>
+			
+		</p:dataTable>
+
+
+	</h:form>
+</h:body>
+</html>
